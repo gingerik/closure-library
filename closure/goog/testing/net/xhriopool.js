@@ -27,12 +27,16 @@ goog.require('goog.testing.net.XhrIo');
 /**
  * A pool containing a single mock XhrIo object.
  *
+ * @param {goog.structs.Map=} opt_headers Map of default headers to add to every
+ *     request.
+ * @param {number=} opt_minCount Minimum number of objects (Default: 0).
+ * @param {number=} opt_maxCount Maximum number of objects (Default: 10).
  * @param {goog.testing.net.XhrIo=} opt_xhr The mock XhrIo object.
  * @constructor
  * @extends {goog.net.XhrIoPool}
  * @final
  */
-goog.testing.net.XhrIoPool = function(opt_xhr) {
+goog.testing.net.XhrIoPool = function(opt_headers, opt_minCount, opt_maxCount, opt_xhr) {
   /**
    * The mock XhrIo object.
    * @type {!goog.testing.net.XhrIo}
@@ -41,7 +45,7 @@ goog.testing.net.XhrIoPool = function(opt_xhr) {
   this.xhr_ = opt_xhr || new goog.testing.net.XhrIo();
 
   // Run this after setting xhr_ because xhr_ is used to initialize the pool.
-  goog.testing.net.XhrIoPool.base(this, 'constructor', undefined, 1, 1);
+  goog.testing.net.XhrIoPool.base(this, 'constructor', opt_headers, opt_minCount, opt_maxCount);
 };
 goog.inherits(goog.testing.net.XhrIoPool, goog.net.XhrIoPool);
 
